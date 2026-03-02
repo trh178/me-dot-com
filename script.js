@@ -39,14 +39,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Animate blog cards on scroll
-    const blogCards = document.querySelectorAll('.blog-card');
-    blogCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-        observer.observe(card);
-    });
+    // Load blog posts
+    async function loadBlogPosts() {
+        const blogGrid = document.getElementById('blog-posts');
+        if (!blogGrid) return;
+
+        try {
+            const response = await fetch('posts.json');
+            const posts = await response.json();
+            
+            const topPosts = posts.slice(0, 3);
+            
+            blogGrid.innerHTML = topPosts.map((post, index) => `
+                <article class="blog-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
+                    <h3>${post.title}</h3>
+                    <p class="blog-date">${post.date}</p>
+                    <p>${post.excerpt}</p>
+                    <a href="posts/${post.slug}.md" class="read-more">Read more →</a>
+                </article>
+            `).join('');
+
+            topPosts.forEach((_, index) => {
+                observer.observe(blogGrid.children[index]);
+            });
+        } catch (error) {
+            console.error('Failed to load blog posts:', error);
+        }
+    }
+
+    loadBlogPosts();
 
     // Animate about section
     const aboutSection = document.querySelector('.about-text');
