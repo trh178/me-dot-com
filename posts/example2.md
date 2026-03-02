@@ -1,8 +1,7 @@
 ---
-title: Design Principles for Developers
-date: December 20, 2025
+title: The Case for Human Intelligence
+date: January 15, 2026
 ---
 
-Understanding fundamental design principles can make your projects stand out. Learn about color theory, typography, spacing, and visual hierarchy.
+[outline the ideas and challenges around the HI stamp]
 
-Good design isn't just about making things look pretty—it's about creating intuitive experiences that guide users naturally through your content.
