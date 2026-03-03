@@ -69,6 +69,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadBlogPosts();
 
+    // Load projects
+    async function loadProjects() {
+        const projectsGrid = document.getElementById('projects-grid');
+        if (!projectsGrid) return;
+
+        try {
+            const response = await fetch('projects.json');
+            const projects = await response.json();
+            
+            projectsGrid.innerHTML = projects.map((project, index) => `
+                <article class="project-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
+                    <h3>${project.title}</h3>
+                    <p>${project.description}</p>
+                    <div class="project-tech">
+                        ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                    </div>
+                </article>
+            `).join('');
+
+            projects.forEach((_, index) => {
+                observer.observe(projectsGrid.children[index]);
+            });
+        } catch (error) {
+            console.error('Failed to load projects:', error);
+        }
+    }
+
+    loadProjects();
+
     // Animate about section
     const aboutSection = document.querySelector('.about-text');
     if (aboutSection) {
