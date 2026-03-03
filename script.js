@@ -98,6 +98,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     loadProjects();
 
+    // Load ideas
+    async function loadIdeas() {
+        const ideasGrid = document.getElementById('ideas-grid');
+        if (!ideasGrid) return;
+
+        try {
+            const response = await fetch('ideas.json');
+            const ideas = await response.json();
+            
+            ideasGrid.innerHTML = ideas.map((idea, index) => `
+                <article class="idea-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
+                    <h3>${idea.title}</h3>
+                    <p>${idea.description}</p>
+                </article>
+            `).join('');
+
+            ideas.forEach((_, index) => {
+                observer.observe(ideasGrid.children[index]);
+            });
+        } catch (error) {
+            console.error('Failed to load ideas:', error);
+        }
+    }
+
+    loadIdeas();
+
     // Animate about section
     const aboutSection = document.querySelector('.about-text');
     if (aboutSection) {

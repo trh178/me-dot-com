@@ -149,6 +149,53 @@ body {
     padding: 6rem 0;
 }
 
+/* Ideas Section */
+.ideas-section {
+    padding: 6rem 0;
+    background-color: var(--bg-secondary);
+}
+
+.ideas-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.ideas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.idea-card {
+    background-color: var(--bg-card);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.idea-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.idea-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.idea-card p {
+    color: var(--text-secondary);
+}
+
+/* About Section */
+.about-section {
+    padding: 6rem 0;
+    background-color: var(--bg-primary);
+}
+
 .projects-section h2 {
     font-size: 2.5rem;
     margin-bottom: 3rem;
