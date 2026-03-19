@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h3>${post.title}</h3>
                     <p class="blog-date">${post.date}</p>
                     <p>${post.excerpt}</p>
-                    <a href="posts/${post.slug}.md" class="read-more">Read more →</a>
+                    <a href="view?file=posts/${post.slug}" class="read-more">Read more →</a>
                 </article>
             `).join('');
 
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <article class="idea-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
                     <h3>${idea.title}</h3>
                     <p>${idea.description}</p>
-                    <a href="ideas/${idea.slug}.md" class="read-more">Read more →</a>
+                    <a href="view?file=ideas/${idea.slug}" class="read-more">Read more →</a>
                 </article>
             `).join('');
 
