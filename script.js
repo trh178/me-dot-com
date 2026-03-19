@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             projectsGrid.innerHTML = projects.map((project, index) => `
                 <article class="project-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
-                    <h3>${project.title}</h3>
+                    <h3>${project.repo ? `<a href="${project.repo}" target="_blank" rel="noopener noreferrer">${project.title}</a>` : project.title}</h3>
                     <p>${project.description}</p>
                     <div class="project-tech">
                         ${project.tech.map(t => `<span class="tech-tag">${t}</span>`).join('')}
@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <article class="idea-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
                     <h3>${idea.title}</h3>
                     <p>${idea.description}</p>
+                    <a href="ideas/${idea.slug}.md" class="read-more">Read more →</a>
                 </article>
             `).join('');
 

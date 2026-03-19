@@ -2,7 +2,7 @@
   "name": "me-dot-com",
   "version": "1.0.0",
   "scripts": {
-    "build": "node scripts/generate-posts.js",
+    "build": "node scripts/generate-posts.js && node scripts/generate-projects.js && node scripts/generate-ideas.js",
     "start": "npx serve",
     "dev": "npx serve"
   }
