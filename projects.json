@@ -3,18 +3,33 @@
     "slug": "project1",
     "title": "E-Commerce Platform",
     "description": "A full-stack e-commerce solution with real-time inventory management.",
-    "tech": ["React", "Node.js", "PostgreSQL"]
+    "tech": [
+      "React",
+      "Node.js",
+      "PostgreSQL"
+    ],
+    "repo": null
   },
   {
     "slug": "project2",
     "title": "Weather Dashboard",
     "description": "Interactive weather app with forecasts and historical data visualization.",
-    "tech": ["JavaScript", "D3.js", "Weather API"]
+    "tech": [
+      "JavaScript",
+      "D3.js",
+      "Weather API"
+    ],
+    "repo": null
   },
   {
     "slug": "project3",
     "title": "Task Management App",
     "description": "Collaborative task management tool with real-time updates.",
-    "tech": ["Vue.js", "Firebase", "Tailwind"]
+    "tech": [
+      "Vue.js",
+      "Firebase",
+      "Tailwind"
+    ],
+    "repo": null
   }
 ]

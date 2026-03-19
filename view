@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .view-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+        }
+        .view-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .view-container .meta {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .view-container h2 {
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .view-container h3 {
+            font-size: 1.25rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .view-container p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            line-height: 1.8;
+        }
+        .view-container ul, .view-container ol {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        .view-container li {
+            margin-bottom: 0.5rem;
+        }
+        .view-container code {
+            background-color: var(--bg-card);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .view-container pre {
+            background-color: var(--bg-card);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.25rem;
+        }
+        .view-container pre code {
+            background: none;
+            padding: 0;
+        }
+        .view-container blockquote {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        .view-container a {
+            color: var(--accent);
+        }
+        .view-container a:hover {
+            color: var(--accent-hover);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo" id="section-title">Back</a>
+        </div>
+    </nav>
+    <article class="view-container" id="content"></article>
+    <script>
+        function parseMarkdown(md) {
+            let html = md
+                .replace(/^---[\s\S]*?---\s*/, '')
+                .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+                .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+                .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+                .replace(/^\> (.+)$/gm, '<blockquote>$1</blockquote>')
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+                .replace(/^\* (.+)$/gm, '<li>$1</li>')
+                .replace(/^- (.+)$/gm, '<li>$1</li>')
+                .replace(/(<li>[\s\S]*?<\/li>)/g, '<ul>$1</ul>')
+                .replace(/<\/ul>\s*<ul>/g, '')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/^(?!<[hupbol])(.+)$/gm, '<p>$1</p>')
+                .replace(/<p><\/p>/g, '');
+
+            return html;
+        }
+
+        async function loadContent() {
+            const params = new URLSearchParams(window.location.search);
+            const file = params.get('file');
+
+            if (!file) {
+                document.getElementById('content').innerHTML = '<p>No file specified</p>';
+                return;
+            }
+
+            const filename = file + '.md';
+            const section = file.includes('/') ? file.split('/')[0] : '';
+            const sectionName = section.charAt(0).toUpperCase() + section.slice(1);
+
+            try {
+                const response = await fetch(filename);
+                if (!response.ok) throw new Error('File not found');
+
+                const md = await response.text();
+                const frontmatter = {};
+                const fmMatch = md.match(/^---\s*\n([\s\S]*?)\n---/);
+
+                if (fmMatch) {
+                    fmMatch[1].split('\n').forEach(line => {
+                        const colonIndex = line.indexOf(':');
+                        if (colonIndex > -1) {
+                            frontmatter[line.slice(0, colonIndex).trim()] = line.slice(colonIndex + 1).trim();
+                        }
+                    });
+                }
+
+                let html = `<a href="index.html" class="back-link">← Back</a>`;
+
+                if (frontmatter.title) {
+                    html += `<h1>${frontmatter.title}</h1>`;
+                    document.title = `${sectionName}: ${frontmatter.title}`;
+                } else {
+                    document.title = sectionName;
+                }
+
+                document.getElementById('section-title').textContent = sectionName;
+                if (frontmatter.date) {
+                    html += `<p class="meta">${frontmatter.date}</p>`;
+                }
+
+                html += parseMarkdown(md);
+
+                document.getElementById('content').innerHTML = html;
+            } catch (error) {
+                document.getElementById('content').innerHTML = '<p>Content not found</p>';
+            }
+        }
+
+        loadContent();
+    </script>
+</body>
+</html>
