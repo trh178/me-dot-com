@@ -86,7 +86,7 @@
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">Back</a>
+            <a href="index.html" class="logo" id="section-title">Back</a>
         </div>
     </nav>
     <article class="view-container" id="content"></article>
@@ -123,10 +123,7 @@
 
             const filename = file + '.md';
             const section = file.includes('/') ? file.split('/')[0] : '';
-
-            if (section === 'ideas') {
-                document.title = 'Ideas';
-            }
+            const sectionName = section.charAt(0).toUpperCase() + section.slice(1);
 
             try {
                 const response = await fetch(filename);
@@ -145,12 +142,16 @@
                     });
                 }
 
-                let html = '<a href="index.html" class="back-link">← Back</a>';
+                let html = `<a href="index.html" class="back-link">← Back</a>`;
 
                 if (frontmatter.title) {
                     html += `<h1>${frontmatter.title}</h1>`;
-                    document.title = frontmatter.title;
+                    document.title = `${sectionName}: ${frontmatter.title}`;
+                } else {
+                    document.title = sectionName;
                 }
+
+                document.getElementById('section-title').textContent = sectionName;
                 if (frontmatter.date) {
                     html += `<p class="meta">${frontmatter.date}</p>`;
                 }

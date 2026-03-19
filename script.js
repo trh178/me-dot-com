@@ -39,10 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Load blog posts
-    async function loadBlogPosts() {
-        const blogGrid = document.getElementById('blog-posts');
-        if (!blogGrid) return;
+    // Load posts
+    async function loadPosts() {
+        const postsGrid = document.getElementById('posts-grid');
+        if (!postsGrid) return;
 
         try {
             const response = await fetch('posts.json');
@@ -50,24 +50,24 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const topPosts = posts.slice(0, 3);
             
-            blogGrid.innerHTML = topPosts.map((post, index) => `
-                <article class="blog-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
+            postsGrid.innerHTML = topPosts.map((post, index) => `
+                <article class="post-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
                     <h3>${post.title}</h3>
-                    <p class="blog-date">${post.date}</p>
+                    <p class="post-date">${post.date}</p>
                     <p>${post.excerpt}</p>
                     <a href="view?file=posts/${post.slug}" class="read-more">Read more →</a>
                 </article>
             `).join('');
 
             topPosts.forEach((_, index) => {
-                observer.observe(blogGrid.children[index]);
+                observer.observe(postsGrid.children[index]);
             });
         } catch (error) {
-            console.error('Failed to load blog posts:', error);
+            console.error('Failed to load posts:', error);
         }
     }
 
-    loadBlogPosts();
+    loadPosts();
 
     // Load projects
     async function loadProjects() {
