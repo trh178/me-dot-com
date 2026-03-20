@@ -47,9 +47,17 @@ function generateIdeas() {
     return {
       slug,
       title: frontmatter.title || slug,
+      date: frontmatter.date || '',
       description: frontmatter.description || getFirstParagraphs(content)
     };
   }).filter(Boolean);
+
+  ideas.sort((a, b) => {
+    if (!a.date && !b.date) return 0;
+    if (!a.date) return 1;
+    if (!b.date) return -1;
+    return new Date(b.date) - new Date(a.date);
+  });
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(ideas, null, 2));
   console.log(`Generated ${ideas.length} ideas to ideas.json`);

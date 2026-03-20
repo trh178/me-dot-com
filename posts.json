@@ -3,18 +3,18 @@
     "slug": "example1",
     "title": "A Vibe Coding SDLC",
     "date": "March 1, 2026",
-    "excerpt": "[upcoming thoughts about vibe coding]"
+    "excerpt": "[upcoming thoughts about vibe coding]\r"
   },
   {
     "slug": "example3",
     "title": "Writing Books is Hard",
     "date": "February 4, 2026",
-    "excerpt": "[outline the plan and path for writing a book finally]"
+    "excerpt": "[outline the plan and path for writing a book finally]\r"
   },
   {
     "slug": "example2",
     "title": "The Case for Human Intelligence",
     "date": "January 15, 2026",
-    "excerpt": "[outline the ideas and challenges around the HI stamp]"
+    "excerpt": "[outline the ideas and challenges around the HI stamp]\r"
   }
 ]

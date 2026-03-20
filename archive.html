@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archive</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .archive-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 8rem 2rem 6rem;
+        }
+        .archive-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        .archive-section {
+            margin-bottom: 4rem;
+        }
+        .archive-section h2 {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .archive-list {
+            list-style: none;
+        }
+        .archive-item {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .archive-item:last-child {
+            border-bottom: none;
+        }
+        .archive-date {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            min-width: 6rem;
+        }
+        .archive-title {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        .archive-title:hover {
+            color: var(--accent);
+        }
+        .archive-empty {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">← Home</a>
+        </div>
+    </nav>
+    <div class="archive-container">
+        <h1>Archive</h1>
+
+        <section class="archive-section" id="posts">
+            <h2>Posts</h2>
+            <ul class="archive-list" id="archive-posts"></ul>
+        </section>
+
+        <section class="archive-section" id="ideas">
+            <h2>Ideas</h2>
+            <ul class="archive-list" id="archive-ideas"></ul>
+        </section>
+    </div>
+
+    <script>
+        async function loadArchive() {
+            await Promise.all([loadSection('posts', 'archive-posts'), loadSection('ideas', 'archive-ideas')]);
+
+            const hash = window.location.hash;
+            if (hash) {
+                const target = document.querySelector(hash);
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        async function loadSection(type, listId) {
+            const list = document.getElementById(listId);
+            try {
+                const response = await fetch(`${type}.json`);
+                const items = await response.json();
+
+                if (items.length === 0) {
+                    list.innerHTML = '<li class="archive-empty">Nothing here yet.</li>';
+                    return;
+                }
+
+                list.innerHTML = items.map(item => `
+                    <li class="archive-item">
+                        <span class="archive-date">${item.date || '—'}</span>
+                        <a href="view.html?file=${type}/${item.slug}" class="archive-title">${item.title}</a>
+                    </li>
+                `).join('');
+            } catch (err) {
+                list.innerHTML = '<li class="archive-empty">Could not load entries.</li>';
+            }
+        }
+
+        loadArchive();
+    </script>
+</body>
+</html>

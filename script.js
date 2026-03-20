@@ -49,13 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const posts = await response.json();
             
             const topPosts = posts.slice(0, 3);
-            
+
             postsGrid.innerHTML = topPosts.map((post, index) => `
                 <article class="post-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
                     <h3>${post.title}</h3>
                     <p class="post-date">${post.date}</p>
                     <p>${post.excerpt}</p>
-                    <a href="view?file=posts/${post.slug}" class="read-more">Read more →</a>
+                    <a href="view.html?file=posts/${post.slug}" class="read-more">Read more →</a>
                 </article>
             `).join('');
 
@@ -107,15 +107,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('ideas.json');
             const ideas = await response.json();
             
-            ideasGrid.innerHTML = ideas.map((idea, index) => `
+            const topIdeas = ideas.slice(0, 3);
+
+            ideasGrid.innerHTML = topIdeas.map((idea, index) => `
                 <article class="idea-card" style="opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s;">
                     <h3>${idea.title}</h3>
                     <p>${idea.description}</p>
-                    <a href="view?file=ideas/${idea.slug}" class="read-more">Read more →</a>
+                    <a href="view.html?file=ideas/${idea.slug}" class="read-more">Read more →</a>
                 </article>
             `).join('');
 
-            ideas.forEach((_, index) => {
+            topIdeas.forEach((_, index) => {
                 observer.observe(ideasGrid.children[index]);
             });
         } catch (error) {
