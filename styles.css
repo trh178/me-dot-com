@@ -174,17 +174,6 @@ body {
     margin-bottom: 1rem;
 }
 
-.blog-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
-    text-align: center;
-}
-
-.blog-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-}
 
 /* Projects Section */
 .projects-section {
@@ -230,12 +219,6 @@ body {
 
 .idea-card p {
     color: var(--text-secondary);
-}
-
-/* About Section */
-.about-section {
-    padding: 6rem 0;
-    background-color: var(--bg-primary);
 }
 
 .projects-section h2 {
@@ -289,35 +272,6 @@ body {
     border: 1px solid var(--border);
 }
 
-.blog-card {
-    background-color: var(--bg-card);
-    padding: 2rem;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    transition: transform 0.3s ease, border-color 0.3s ease;
-}
-
-.blog-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent);
-}
-
-.blog-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-}
-
-.blog-date {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-}
-
-.blog-card p {
-    color: var(--text-secondary);
-    margin-bottom: 1rem;
-}
 
 .read-more {
     color: var(--accent);
@@ -350,22 +304,6 @@ body {
     text-align: center;
 }
 
-.skills {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 2rem;
-}
-
-.skill-tag {
-    background-color: var(--bg-card);
-    color: var(--accent);
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.875rem;
-    border: 1px solid var(--border);
-}
 
 /* Section footer (View all link) */
 .section-footer {
@@ -432,7 +370,7 @@ body {
         gap: 1rem;
     }
 
-.posts-grid {
+    .posts-grid {
         grid-template-columns: 1fr;
     }
 }

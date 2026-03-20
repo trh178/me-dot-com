@@ -51,7 +51,7 @@ function generateProjects() {
       slug,
       title: frontmatter.title || slug,
       description: frontmatter.description || getFirstParagraphs(content),
-      tech: frontmatter.tech || [],
+      tech: Array.isArray(frontmatter.tech) ? frontmatter.tech : (frontmatter.tech ? [frontmatter.tech] : []),
       repo: frontmatter.repo || null
     };
   }).filter(Boolean);
